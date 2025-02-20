@@ -2,11 +2,14 @@ import { ReactNode } from "react";
 
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
+import { auth } from "@/auth";
 
-const Layout = ({ children }: { children: ReactNode }) => {
+const Layout = async ({ children }: { children: ReactNode }) => {
+  const session = await auth();
+  console.log("this si from layout", session);
   return (
     <div className="">
-      <Navbar />
+      <Navbar user={session} />
       {children}
       <Footer />
     </div>

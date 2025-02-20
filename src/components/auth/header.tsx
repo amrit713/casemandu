@@ -1,7 +1,7 @@
 import Image from "next/image";
 
 interface HeaderProps {
-  label: string;
+  label?: string;
 }
 
 export const Header = ({ label }: HeaderProps) => {

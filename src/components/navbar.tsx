@@ -1,12 +1,19 @@
+"use client";
+
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
+import { useSession } from "next-auth/react";
 
 import MaxWidthWrapper from "@/components/max-width-wrapper";
-import { buttonVariants } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
+import { useModal } from "@/hooks/use-modal-store";
 
 export const Navbar = () => {
-  const user = false;
-  const isAdmin = true;
+  const { data: user } = useSession();
+  const { onOpen } = useModal();
+
+  const isAdmin = user?.user.role === "ADMIN";
+
   return (
     <nav className="sticky z-[100] h-14 inset-x-0 top-0 w-full border-b border-gray-200 bg-white/75 backdrop-blur-lg transition-all">
       <MaxWidthWrapper>
@@ -21,15 +28,13 @@ export const Navbar = () => {
           <div className="h-full flex items-center space-x-4">
             {user ? (
               <>
-                <Link
-                  href={"/"}
-                  className={buttonVariants({
-                    size: "sm",
-                    variant: "ghost",
-                  })}
+                <Button
+                  variant={"ghost"}
+                  size={"sm"}
+                  onClick={() => onOpen("logout")}
                 >
                   Sign out
-                </Link>
+                </Button>
 
                 {isAdmin && (
                   <Link

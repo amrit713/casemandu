@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Recursive } from "next/font/google";
 import "./globals.css";
 import React from "react";
+import { SessionProvider } from "next-auth/react";
+import { ModalProvider } from "@/components/providers/modal-provider";
 
 const recursive = Recursive({ subsets: ["latin"] });
 
@@ -16,8 +18,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={`${recursive.className}  `}>{children}</body>
-    </html>
+    <SessionProvider>
+      <html lang="en">
+        <body className={`${recursive.className}  `}>
+          <ModalProvider />
+          {children}
+        </body>
+      </html>
+    </SessionProvider>
   );
 }
