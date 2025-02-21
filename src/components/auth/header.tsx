@@ -14,7 +14,7 @@ export const Header = ({ label }: HeaderProps) => {
 
         <h1 className="text-3xl font-semibold">Casemandu</h1>
       </div>
-      <p className="text-muted-foreground text-sm">{label}</p>
+      <p className="text-zinc-600 text-sm">{label}</p>
     </div>
   );
 };

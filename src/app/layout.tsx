@@ -4,6 +4,7 @@ import "./globals.css";
 import React from "react";
 import { SessionProvider } from "next-auth/react";
 import { ModalProvider } from "@/components/providers/modal-provider";
+import { Toaster } from "@/components/ui/toaster";
 
 const recursive = Recursive({ subsets: ["latin"] });
 
@@ -22,6 +23,7 @@ export default function RootLayout({
       <html lang="en">
         <body className={`${recursive.className}  `}>
           <ModalProvider />
+          <Toaster />
           {children}
         </body>
       </html>

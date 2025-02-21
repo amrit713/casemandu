@@ -2,15 +2,17 @@ import { ReactNode } from "react";
 
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
-import { auth } from "@/auth";
 
-const Layout = async ({ children }: { children: ReactNode }) => {
-  const session = await auth();
-  console.log("this si from layout", session);
+const Layout = ({ children }: { children: ReactNode }) => {
   return (
     <div className="">
-      <Navbar user={session} />
-      {children}
+      <Navbar />
+
+      <main
+        className={"flex grainy-light flex-col min-h-[calc(100vh-8.4rem-3px)]"}
+      >
+        <div className="flex flex-1 flex-col h-full">{children}</div>
+      </main>
       <Footer />
     </div>
   );
