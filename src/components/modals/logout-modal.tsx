@@ -42,9 +42,11 @@ export const LogoutModal = () => {
         </DialogHeader>
 
         <DialogDescription className={"text-center"}>
-          Are you sure you would like to{" "}
-          <span className={"text-gray-800  font-semibold"}>Logout</span> of your
-          account?{" "}
+          <p className="">
+            Are you sure you would like to{" "}
+            <span className={"text-gray-800  font-semibold"}>Logout</span> of
+            your account?{" "}
+          </p>
           <span className={"font-semibold text-base text-primary"}>
             {user?.user.name}
           </span>
@@ -60,7 +62,7 @@ export const LogoutModal = () => {
             <ButtonLoader
               label={"Confirm"}
               isLoading={isLoading}
-              loadingText={"Logging out..."}
+              loadingText={"Logging out"}
             />
           </Button>
           <Button className={"w-full"} onClick={onClose}>

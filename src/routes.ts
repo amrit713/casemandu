@@ -9,7 +9,6 @@ export const publicRoutes: string[] = [
   "/configure/upload",
   "/configure/design",
   "/configure/preview",
-  "/auth/auth-callback",
 ];
 
 /**
