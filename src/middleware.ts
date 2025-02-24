@@ -17,7 +17,6 @@ export default auth(async (req) => {
   //     req.auth
   const { nextUrl } = req;
   const isLoggedIn = !!req.auth;
-  console.log(isLoggedIn);
 
   const cookieStore = await cookies();
 

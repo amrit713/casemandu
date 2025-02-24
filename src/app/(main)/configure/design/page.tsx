@@ -4,13 +4,13 @@ import { db } from "@/lib/db";
 import { DesignConfigurator } from "./design-configurator";
 
 interface PageProps {
-  searchParams: {
+  searchParams: Promise<{
     [key: string]: string | string[] | undefined;
-  };
+  }>;
 }
 
 const DesignPage = async ({ searchParams }: PageProps) => {
-  const { id } = searchParams;
+  const { id } = await searchParams;
 
   if (!id || typeof id !== "string") {
     return notFound();

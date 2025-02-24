@@ -5,13 +5,13 @@ import { db } from "@/lib/db";
 import { DesignPreview } from "./design-preview";
 
 interface PreviewProps {
-  searchParams: {
+  searchParams: Promise<{
     [key: string]: string | string[] | undefined;
-  };
+  }>;
 }
 
 const PreviewPage = async ({ searchParams }: PreviewProps) => {
-  const { id } = searchParams;
+  const { id } = await searchParams;
 
   if (!id || typeof id !== "string") {
     return notFound();
