@@ -60,7 +60,7 @@ export const LogoutModal = () => {
             <ButtonLoader
               label={"Confirm"}
               isLoading={isLoading}
-              loadingText={"Logging out"}
+              loadingText={"Logging out..."}
             />
           </Button>
           <Button className={"w-full"} onClick={onClose}>
