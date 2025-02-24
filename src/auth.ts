@@ -21,8 +21,6 @@ export const {
         session.user.role = token.role as UserRole;
       }
 
-      console.log({ sessionToken: token, session });
-
       return session;
     },
 

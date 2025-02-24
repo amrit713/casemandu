@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 
 import { LogoutModal } from "@/components/modals/logout-modal";
+import { AuthModal } from "@/components/modals/auth-modal";
 
 export const ModalProvider = () => {
   const [isMounted, setIsMounted] = useState(false);
@@ -16,6 +17,7 @@ export const ModalProvider = () => {
   return (
     <>
       <LogoutModal />
+      <AuthModal />
     </>
   );
 };

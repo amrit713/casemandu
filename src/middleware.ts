@@ -1,4 +1,5 @@
 import NextAuth from "next-auth";
+import { cookies } from "next/headers";
 
 import authConfig from "@/auth.config";
 import {
@@ -12,10 +13,13 @@ const { auth } = NextAuth(authConfig);
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-expect-error
-export default auth((req) => {
+export default auth(async (req) => {
   //     req.auth
   const { nextUrl } = req;
   const isLoggedIn = !!req.auth;
+  console.log(isLoggedIn);
+
+  const cookieStore = await cookies();
 
   const isApiAuthRoute = nextUrl.pathname.startsWith(apiAuthPrefix);
   const isPublicRoute = publicRoutes.includes(nextUrl.pathname);
@@ -26,8 +30,18 @@ export default auth((req) => {
   }
   if (isAuthRoute) {
     if (isLoggedIn) {
-      // next url  bring absolute URL like localhost:3000/setting
-      return Response.redirect(new URL(DEFAULT_LOGIN_REDIRECT, nextUrl));
+      const configId = cookieStore.get("configurationId")?.value;
+
+      if (configId) {
+        cookieStore.delete("configurationId");
+
+        return Response.redirect(
+          new URL(`/configure/preview?id=${configId}`, nextUrl),
+        );
+      } else {
+        return Response.redirect(new URL(DEFAULT_LOGIN_REDIRECT, nextUrl));
+        // next url  bring absolute URL like localhost:3000/setting
+      }
     }
     return null;
   }

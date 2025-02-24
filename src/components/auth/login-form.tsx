@@ -19,7 +19,8 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Message } from "@/components/message";
-import { Loader } from "lucide-react";
+
+import { ButtonLoader } from "@/components/button-loader";
 
 export const LoginForm = () => {
   const [success, setSuccess] = useState<null | string>();
@@ -51,7 +52,7 @@ export const LoginForm = () => {
         setError("Invalid Credentials");
       } else {
         form.reset();
-        router.push("/");
+        // router.push("/");
         router.refresh();
 
         setSuccess("Login successful");
@@ -113,11 +114,11 @@ export const LoginForm = () => {
             </div>
             <Message success={success} error={error} />
             <Button type={"submit"} className={"w-full"} disabled={isLoading}>
-              {isLoading ? (
-                <Loader className={"size-4  animate-spin"} />
-              ) : (
-                <>Login</>
-              )}
+              <ButtonLoader
+                label={"Login"}
+                isLoading={isLoading}
+                loadingText={"Logging in"}
+              />
             </Button>
           </form>
         </Form>

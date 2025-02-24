@@ -5,6 +5,7 @@ import React from "react";
 import { SessionProvider } from "next-auth/react";
 import { ModalProvider } from "@/components/providers/modal-provider";
 import { Toaster } from "@/components/ui/toaster";
+import { ReactQueryProvider } from "@/components/providers/react-query-provider";
 
 const recursive = Recursive({ subsets: ["latin"] });
 
@@ -22,9 +23,11 @@ export default function RootLayout({
     <SessionProvider>
       <html lang="en">
         <body className={`${recursive.className}  `}>
-          <ModalProvider />
-          <Toaster />
-          {children}
+          <ReactQueryProvider>
+            <ModalProvider />
+            <Toaster />
+            {children}
+          </ReactQueryProvider>
         </body>
       </html>
     </SessionProvider>

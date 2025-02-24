@@ -1,6 +1,7 @@
 "use client";
 
-import { signOut } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
+import { useState } from "react";
 
 import {
   Dialog,
@@ -13,16 +14,22 @@ import {
 import { Header } from "@/components/auth/header";
 import { Button } from "@/components/ui/button";
 import { useModal } from "@/hooks/use-modal-store";
+import { ButtonLoader } from "@/components/button-loader";
 
 export const LogoutModal = () => {
   const { isOpen, onClose, type } = useModal();
+  const { data: user } = useSession();
+  const [isLoading, setIsLoading] = useState(false);
 
   const modalOpen = isOpen && type === "logout";
   const logoutHandler = async () => {
     try {
+      setIsLoading(true);
       await signOut();
     } catch (error: any) {
       console.error(error);
+    } finally {
+      setIsLoading(false);
     }
   };
   return (
@@ -36,8 +43,11 @@ export const LogoutModal = () => {
 
         <DialogDescription className={"text-center"}>
           Are you sure you would like to{" "}
-          <span className={"text-gray-800 font-semibold"}>Logout</span> of your
-          account?
+          <span className={"text-gray-800  font-semibold"}>Logout</span> of your
+          account?{" "}
+          <span className={"font-semibold text-base text-primary"}>
+            {user?.user.name}
+          </span>
         </DialogDescription>
 
         <DialogFooter className={"w-full"}>
@@ -45,8 +55,13 @@ export const LogoutModal = () => {
             className={"w-full"}
             variant={"secondary"}
             onClick={logoutHandler}
+            disabled={isLoading}
           >
-            Confirm
+            <ButtonLoader
+              label={"Confirm"}
+              isLoading={isLoading}
+              loadingText={"Logging out"}
+            />
           </Button>
           <Button className={"w-full"} onClick={onClose}>
             Cancel

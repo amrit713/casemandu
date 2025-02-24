@@ -3,7 +3,7 @@ import { CustomerReview } from "@/components/landing-page/customer-review";
 import { Reviews } from "@/components/landing-page/review";
 import { Information } from "@/components/landing-page/information";
 
-export default function Home() {
+export default async function Home() {
   return (
     <div className="bg-gray-50 grainy-light">
       <section>

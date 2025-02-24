@@ -16,7 +16,7 @@ const STEPS = [
   },
   {
     name: "Step 3: Summary",
-    description: "Review your final design",
+    description: "Review your final upload",
     url: "/preview",
   },
 ];
@@ -33,7 +33,6 @@ export const Steps = () => {
           pathname.endsWith(step.url),
         );
 
-        console.log(isCurrent, STEPS.slice(i));
         const imgPath = `/snake-${i + 1}.png`;
 
         return (
