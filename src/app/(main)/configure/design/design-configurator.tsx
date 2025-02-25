@@ -36,6 +36,7 @@ import { useUploadThing } from "@/lib/uploadthing";
 import { useToast } from "@/hooks/use-toast";
 import { saveConfig as _saveConfig } from "./actions";
 import { useRouter } from "next/navigation";
+import { ButtonLoader } from "@/components/button-loader";
 
 export type SaveConfigArgs = {
   color: CaseColor;
@@ -428,14 +429,12 @@ export const DesignConfigurator = ({
                   })
                 }
               >
-                {isPending ? (
-                  <>Saving...</>
-                ) : (
-                  <>
-                    {" "}
-                    Continue <ArrowRight className={"size-4 ml-2 inline"} />
-                  </>
-                )}
+                <ButtonLoader
+                  label={"Continue"}
+                  icon={ArrowRight}
+                  isLoading={isPending}
+                  loadingText={"Saving"}
+                />
               </Button>
             </div>
           </div>

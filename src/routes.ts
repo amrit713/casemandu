@@ -11,6 +11,8 @@ export const publicRoutes: string[] = [
   "/configure/preview",
 ];
 
+export const adminRoutes: string[] = ["/dashboard"];
+
 /**
  *An array of routes that are used for authentication
  * these routes will redirect logged in users to /settings

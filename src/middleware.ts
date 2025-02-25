@@ -1,5 +1,6 @@
 import NextAuth from "next-auth";
 import { cookies } from "next/headers";
+import { auth as session } from "@/auth";
 
 import authConfig from "@/auth.config";
 import {
@@ -7,6 +8,7 @@ import {
   apiAuthPrefix,
   authRoutes,
   publicRoutes,
+  adminRoutes,
 } from "@/routes";
 
 const { auth } = NextAuth(authConfig);
@@ -18,11 +20,21 @@ export default auth(async (req) => {
   const { nextUrl } = req;
   const isLoggedIn = !!req.auth;
 
+  const user = await session();
+
   const cookieStore = await cookies();
 
   const isApiAuthRoute = nextUrl.pathname.startsWith(apiAuthPrefix);
   const isPublicRoute = publicRoutes.includes(nextUrl.pathname);
   const isAuthRoute = authRoutes.includes(nextUrl.pathname);
+  const isAdminPage = adminRoutes.includes(nextUrl.pathname);
+
+  if (isAdminPage) {
+    if (user?.user.role !== "ADMIN") {
+      return Response.redirect(new URL(DEFAULT_LOGIN_REDIRECT, nextUrl));
+    }
+    return null;
+  }
 
   if (isApiAuthRoute) {
     return null;

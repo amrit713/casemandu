@@ -42,17 +42,23 @@ export const LogoutModal = () => {
         </DialogHeader>
 
         <DialogDescription className={"text-center"}>
-          <p className="">
-            Are you sure you would like to{" "}
-            <span className={"text-gray-800  font-semibold"}>Logout</span> of
-            your account?{" "}
+          <p className="flex flex-col items-center justify-center">
+            <span>
+              Are you sure you would like to{" "}
+              <span className={"text-gray-800  font-semibold"}>Logout</span> of
+              your account?{" "}
+            </span>
+
+            <span className={"font-semibold text-base text-primary"}>
+              👋 {user?.user.name}
+            </span>
           </p>
-          <span className={"font-semibold text-base text-primary"}>
-            {user?.user.name}
-          </span>
         </DialogDescription>
 
-        <DialogFooter className={"w-full"}>
+        <DialogFooter className={"w-full gap-2"}>
+          <Button className={"w-full"} onClick={onClose}>
+            Cancel
+          </Button>
           <Button
             className={"w-full"}
             variant={"secondary"}
@@ -64,9 +70,6 @@ export const LogoutModal = () => {
               isLoading={isLoading}
               loadingText={"Logging out"}
             />
-          </Button>
-          <Button className={"w-full"} onClick={onClose}>
-            Cancel
           </Button>
         </DialogFooter>
       </DialogContent>

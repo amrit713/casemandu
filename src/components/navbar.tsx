@@ -2,18 +2,16 @@
 
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
-import { useSession } from "next-auth/react";
 
 import MaxWidthWrapper from "@/components/max-width-wrapper";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { useModal } from "@/hooks/use-modal-store";
+import { User } from "@prisma/client";
 
-export const Navbar = () => {
-  const { data: user } = useSession();
-
+export const Navbar = ({ user }: { user: User | null }) => {
   const { onOpen } = useModal();
 
-  const isAdmin = user?.user.role === "ADMIN";
+  const isAdmin = user?.role === "ADMIN";
 
   return (
     <nav className="sticky z-[100] h-14 inset-x-0 top-0 w-full border-b border-gray-200 bg-white/75 backdrop-blur-lg transition-all">
