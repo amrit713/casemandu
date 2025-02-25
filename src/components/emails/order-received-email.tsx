@@ -26,7 +26,7 @@ export const OrderReceivedEmail = ({
   const baseUrl =
     process.env.NODE_ENV === "development"
       ? "http://localhost:3000"
-      : "https://casemandu-one.vercel.app/";
+      : "https://casemandu-one.vercel.app";
   return (
     <Html>
       <Head> Your order summary and estimated delivery date</Head>

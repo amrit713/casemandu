@@ -10,10 +10,13 @@ import { Spinner } from "@/components/spinner";
 import { PhonePreview } from "@/components/phone-preview";
 import { formatPrice } from "@/lib/utils";
 
+import { useToast } from "@/hooks/use-toast";
+
 export const ThankYou = () => {
   const [showConfetti, setShowConfetti] = useState(false);
   const searchParams = useSearchParams();
   const orderId = searchParams.get("orderId") || "";
+  const toast = useToast();
 
   useEffect(() => {
     setShowConfetti(true);
@@ -21,7 +24,9 @@ export const ThankYou = () => {
 
   const { data } = useQuery({
     queryKey: ["get-payment-status"],
-    queryFn: async () => await getPaymentStatus({ orderId }),
+    queryFn: async () => {
+      await getPaymentStatus({ orderId });
+    },
     retry: true,
     retryDelay: 500,
   });
@@ -44,8 +49,19 @@ export const ThankYou = () => {
     );
   }
 
-  const { configuration, billingAddress, shippingAddress, amount } = data;
+  const { configuration, billingAddress, shippingAddress, amount, isPaid } =
+    data;
+
   const { color } = configuration;
+
+  if (isPaid) {
+    // @ts-ignore
+    toast({
+      title: "Email has been sent to your mail",
+      description: "Your order has been placed. Thank you 😊",
+      variant: "success",
+    });
+  }
 
   return (
     <>
