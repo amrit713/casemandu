@@ -6,6 +6,7 @@ import { Resend } from "resend";
 import { stripe } from "@/lib/stripe";
 import { db } from "@/lib/db";
 import { OrderReceivedEmail } from "@/components/emails/order-received-email";
+import { finished } from "stream";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -72,6 +73,9 @@ export async function POST(req: NextRequest) {
             },
           },
         },
+        include: {
+          configuration: true,
+        },
       });
 
       await resend.emails.send({
@@ -92,6 +96,26 @@ export async function POST(req: NextRequest) {
           },
         }),
       });
+
+      if (updatedOrder.isPaid) {
+        await fetch("http://localhost:3000/api/v1/events", {
+          method: "POST",
+          headers: {
+            Authorization: "Bearer cm83ye2450001yxr7ifb6u7tu",
+          },
+          body: JSON.stringify({
+            category: "sale",
+            fields: {
+              amount: updatedOrder.amount, // for example: user id
+              email: event.data.object.customer_details.email,
+              material: updatedOrder.configuration.material,
+              finished: updatedOrder.configuration.finish,
+              color: updatedOrder.configuration.color,
+              // for example: user email
+            },
+          }),
+        });
+      }
 
       return NextResponse.json({ result: event, ok: true });
     }

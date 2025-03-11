@@ -1,4 +1,5 @@
 "use server";
+import axios from "axios";
 
 import { OrderStatus } from "@prisma/client";
 import { db } from "@/lib/db";
@@ -17,5 +18,6 @@ export const changeOrderStatus = async ({
     data: {
       status: newStatus,
     },
+    include: { configuration: true },
   });
 };
